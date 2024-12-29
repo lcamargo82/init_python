@@ -1,0 +1,32 @@
+# version: '3.8'
+
+# services:
+#   python-dev:
+#     build:
+#       context: .
+#       dockerfile: Dockerfile
+#     container_name: python_dev
+#     volumes:
+#       - .:/usr/src/app  # Sincroniza o diretório atual com o contêiner
+#     ports:
+#       - "8000:8000"  # Porta padrão para desenvolvimento, ajuste conforme necessário
+#     tty: true  # Permite abrir um shell interativo
+#     stdin_open: true
+
+version: "3.8"
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: python-dev
+    volumes:
+      - ./app:/app:delegated # Monta o código local no contêiner
+    ports:
+        - "8501:8501" # Porta exposta para acesso externo
+    environment:
+      - PYTHONDONTWRITEBYTECODE=1 # Evita criar arquivos .pyc
+      - PYTHONUNBUFFERED=1       # Garante logs em tempo real
+    tty: true # Habilita terminal interativo
+
